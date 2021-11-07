@@ -1,0 +1,41 @@
+<script>
+    class Person{
+        constructor(name,year){
+            this.name = name;
+            this.year = year;
+        }
+        
+        calcAge(){
+            return new Date().getFullYear() - this.year;
+        }
+        
+        static compareAge(m1,m2){
+            if(m1.year > m2.year){
+                console.log(`${m1.name} младше ${m2.name} на ${m1.year - m2.year}`);
+            }else{
+                 console.log(`${m2.name} младше ${m1.name} на ${m2.year -m1.year}`);
+            }
+        }
+    }
+    
+//    Если класс наследуется от класса в котором есть конструктор класса с параметрами, то в текущем классе необходимо обязательно вызывать конструктор базового класса с помощью ключевого слова super
+    class Teacher extends Person{
+        constructor(name,year,subject){
+            super(name,year);
+            this.subject = subject;
+        }
+        calcAge(){
+            console.log(`Возраст: ${super.calcAge()}`);
+        }
+    }
+    
+    let teacher = new Teacher("Петр",1975,"Физика");
+    teacher.calcAge();
+    
+    
+//    let man = new Person("Иван",1990);
+    
+//    let man2 = new Person("Петр",1992);
+//    Person.compareAge(man,man2);
+//    console.log(`Возраст ${man.name} - ${man.calcAge()}`);
+</script>

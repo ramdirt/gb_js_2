@@ -1,0 +1,36 @@
+<script>
+    function Person(firstName,lastName,year){
+        this.name = firstName;
+        this.lastName = lastName;
+        this.year = year;
+        this.calcAge = ()=>{
+            console.log(new Date().getFullYear() - this.year);
+        }
+    }
+    
+    Person.prototype.info = () => alert('test');
+    
+    function Teacher(firstName,lastName,year,subject){
+        Person.apply(this,arguments);
+        this.subject = subject;
+    }
+    
+    let t = new Teacher("Иван","Иванов",1980,"Математика");
+    Teacher.prototype = Object.create(Person.prototype);
+    Teacher.prototype.constructor = Person;
+    console.log(t);
+    
+    
+//    При наследовании классов важно соблюдать следующий алгоритм
+    
+//    1) В конструкторе потомка вызываем конструктор базового класса если, в конструкторе базового класса есть параметры
+//    2) Если у потомка есть уникальные свойства, то их нужно инициализировать
+//    3) Импортируем прототип базового класса
+    
+   /* let man1 = new Person("Иван","Иванов",1990);
+    man1.profession = "админ";
+    man1.__proto__.profession = "программист";
+    alert(man1.profession);
+    man1.calcAge();
+    console.log(man1);*/
+</script>

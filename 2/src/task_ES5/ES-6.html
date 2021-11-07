@@ -1,0 +1,45 @@
+<script>
+    class Person{
+        constructor(name,year){
+            this.name = name;
+            this.year = year;
+        }
+        
+        _calcAge(){
+            console.log(new Date().getFullYear() - this.year);
+        }
+        
+        static test(x){
+            if(x == undefined){
+                x = 10;
+            }
+            return x * 2;
+        }
+        
+        sayHi(){
+            return `${this.name} says hello`;
+        }
+    }
+    
+//    let man1 = new Person("Петр",1990);
+//    alert(Person.test(5));
+    
+    class Teacher extends Person{
+        constructor(name,year,subject){
+            super(name,year);//вызвали конструктор базового класса
+            this.subject = subject;
+            alert(this.sayHi());
+            
+        }
+        sayHi(){
+            return `${super.sayHi()} as Teaher`;
+//             return `${this.name} says hello as Teaher`;
+        }
+    }
+    let Ann = new Teacher("Анна",1994,"Информатика");
+    console.log(Ann);
+    
+//    alert(man1.sayHi());
+//    man1._calcAge();
+//    console.log(man1);
+</script>
