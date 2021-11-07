@@ -16,6 +16,7 @@ const renderProduct = (item) => {
             </div>`
 };
 
+
 const renderPage = list => {
     let markupToProducts = ''
     list.forEach(item => markupToProducts += renderProduct(item));
