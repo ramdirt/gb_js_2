@@ -1,7 +1,127 @@
+.basket {
+  position: absolute;
+  min-width: 335px;
+  min-height: 0px;
+  background-color: #69665C;
+  top: 85px;
+  right: 10px;
+  padding: 10px;
+}
+
+.basket__item {
+  list-style-type: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 5px;
+  background-color: #FAF9F8;
+}
+
+.basket__item:not(:first-child) {
+  margin-top: 10px;
+}
+
+.basket__item_picture {
+  width: 40%;
+}
+
+.basket__item_img {
+  width: 100%;
+}
+
+.basket__item_info {
+  width: 55%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 5px;
+}
+
+.basket__item_amout {
+  width: 40%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.basket__item_amout-btn {
+  border: none;
+  width: 20px;
+  background-color: #69665C;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+.basket__item_delete {
+  border: none;
+  width: 100px;
+  height: 20px;
+  color: #FFFFFF;
+  background-color: #B2AFA1;
+  cursor: pointer;
+}
+
+.basket__total {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 10px;
+  background-color: #FAF9F8;
+  margin-top: 10px;
+}
+
+.basket__total_price {
+  font-size: 24px;
+}
+
+.btn-offer {
+  background-color: #B2AFA1;
+  color: #FFFFFF !important;
+}
+
+.btn-offer:hover {
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+  background-color: #69665C;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
 * {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+}
+
+body {
+  background-color: #FAF9F8;
+}
+
+.hidden {
+  visibility: hidden;
 }
 
 .container {
@@ -22,6 +142,7 @@
 }
 
 .header {
+  position: relative;
   height: 75px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -54,7 +175,7 @@
 
 .product-item {
   background-color: #B2AFA1;
-  width: 28%;
+  width: 20%;
   margin: 5px 0px 5px 0px;
   padding: 20px;
 }
