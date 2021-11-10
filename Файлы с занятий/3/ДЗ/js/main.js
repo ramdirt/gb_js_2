@@ -50,8 +50,7 @@ class ProductList{
         $goods.forEach(product => {
             product.addEventListener('click', event => {
                 let id = event.currentTarget.parentNode.dataset.id;
-                basket.addProductToObject(id, 'add')
-                basket.render()
+                basket._addProducts(id)
             })
         })
     }
@@ -105,9 +104,28 @@ class Basket {
                     this.removeProductToObject(item.id_product)
                 }
                 this.render()
-            }
+            } 
         }
     }
+
+    _addProducts(id) {
+        this._getBasket()
+        .then(data => {
+            let goods = [];
+            for(let item of data.contents) {
+                if (item.id_product == id) {
+                    goods.push(item)
+                }
+            }
+            if (this.searchBasket(id)) {
+                this.addProductToObject(id, 'add')
+            } else {
+                this.basket.push(goods[0])
+            }
+            this.render()
+        });
+    }
+
 
     removeProductToObject(id) {
         let index = this.basket.findIndex(item => item.id_product == id)
@@ -178,6 +196,15 @@ class Basket {
                 this.addProductToObject(id, move)
             })
         })
+    }
+
+    searchBasket(id) {
+        for (let item of this.basket) {
+            if (item.id_product == id) {
+                return true  
+            }
+        }
+        return false
     }
 
     render(){
