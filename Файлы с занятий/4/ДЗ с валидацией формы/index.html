@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        input,
+        button {
+            margin-top: 10px;
+        }
+        
+        
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <div class="form">
+            <form action="#">
+                <input type="text" id="name" placeholder="Введите имя" value='name'>
+                <input type="text" id="phone" placeholder="Введите номер телефона" value='88005553535'>
+                <input type="text" id="email" placeholder="Введите эмэйл" value='mail@mail.ru'>
+                <button>Отправить</button>
+            </form>
+        </div>
+    </div>
+
+
+    <script>
+        'use strict';
+
+        const $form = document.querySelector('form')
+
+        const $name = document.querySelector('#name');
+        const $phone = document.querySelector('#phone'); 
+        const $email = document.querySelector('#email');
+
+        function validation (type, value) {
+            let text = value
+            if (type == 'name') {
+                let regexp = new RegExp(/[a-zа-я]/,'i');
+                return regexp.test(value)
+            }
+
+            if (type == 'phone') {
+                let regexp = new RegExp(/^(\d{7,10})/,'g');
+                return regexp.test(value)
+            }
+
+            if (type == 'email') {
+                let regexp = new RegExp(/^[a-zа-я0-9._-]+@[a-z0-9-_]+\.[a-z0-9-_]{2,4}/,'i');
+                return regexp.test(value)
+            }
+        }
+
+        $form.addEventListener('submit', event => {
+
+            if ($name.value == '') {
+                $name.style.borderColor = 'red';
+                $name.insertAdjacentHTML('afterend', '<p>пусто<p>')
+            } else {
+                if (validation('name', $name.value)) {
+                    console.log($name.value)
+                } else {
+                    $name.style.borderColor = 'red';
+                    $name.insertAdjacentHTML('afterend', '<p>пусто<p>')
+                }
+            }
+
+            if ($phone.value == '') {
+                $phone.style.borderColor = 'red';
+                $phone.insertAdjacentHTML('afterend', '<p>пусто<p>')
+            } else {
+                if (validation('phone', $phone.value)) {
+                    console.log($phone.value)
+                } else {
+                    $phone.style.borderColor = 'red';
+                    $phone.insertAdjacentHTML('afterend', '<p>не верно<p>')
+                }
+            }
+
+            if ($email.value == '') {
+                $email.style.borderColor = 'red';
+                $email.insertAdjacentHTML('afterend', '<p>пусто<p>')
+            } else {
+                if (validation('email', $email.value)) {
+                    console.log($email.value)
+                } else {
+                    $email.style.borderColor = 'red';
+                    $email.insertAdjacentHTML('afterend', '<p>не верно<p>')
+                }
+            }
+            if ($name.value == '' || $phone.value == '' || $email.value == '') {
+                event.preventDefault()
+                
+            }
+        } )
+
+    </script>
+
+
+</body>
+</html>
