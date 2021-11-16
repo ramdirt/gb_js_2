@@ -1,0 +1,84 @@
+<div id="app">
+   <div v-for="item of products">
+       <p>Название товара: {{ item.title }}</p>
+       <p>Стоимость товара: {{ item.price }}</p>
+<!--       <p>Общая стоимость с учечом количества: {{ item.quantity * item.price }}</p>-->
+       <img width="200" :src="item.img" :alt="item.title"><hr>
+       <button @click="addProduct(item)">Купить</button>
+   </div>
+   
+    <h1>Привет, {{ name }}</h1>
+    <h1>{{ sayHello() }}</h1>
+    <a :href="link">Перейти в поисковик</a>
+<!--    <button v-on:click="counter++">OK</button>-->
+    <button @click="increase(forCounter)">OK</button>
+    <span>{{ counter }}</span><hr>
+    <div v-show="show">
+        <h2 v-if="show">Text is visible</h2>
+        <h2 v-else="show">Text is not visible</h2>
+    </div>
+    <button @click="show=!show">Show(Hide)</button>
+    
+    <p>{{ counter > 10 ? 'Больше 10' : 'Меньше либо равно 10' }}</p>
+    
+    <p @mousemove="getCoordinates()">Some long long text {{ x }} / {{ y }}
+        <span @mousemove.stop>Текст, который не реагирует на движение мышкой</span>
+    </p>
+    <input type="text" v-model.lazy="name">
+    <div v-html="completeEl"></div>
+    
+</div>
+<script src="vue.js"></script>
+<script>
+    const app = new Vue({
+        el:'#app',
+        data:{
+            name:'Иван',
+            link:'https://google.com',
+            counter: 0,
+            forCounter:2,
+            show: false,
+            x:0,
+            y:0,
+            completeEl: '<a href="https://google.com">Google</a>',
+            products:[
+                {
+                    title: 'Audi',
+                    price: 1000,
+//                    quantity: 3,
+                    img: 'img/audi.jpg'
+                },
+                {
+                    title: 'BMW',
+                    price: 1200,
+//                    quantity: 5,
+                    img: 'img/BMW.jpg'
+                },
+                {
+                    title: 'VW',
+                    price: 900,
+//                    quantity: 2,
+                    img: 'img/vw.jpg'
+                }
+                
+                
+            ]
+        },
+        methods:{
+            sayHello(){
+                return `Добрый день, ${this.name}`
+            },
+            increase(step){
+                this.counter += step;
+            },
+            getCoordinates(){
+                this.x = event.clientX;
+                this.y = event.clientY;
+            },
+            addProduct(item){
+                let itemCart = Object.assign(item,{quantity:1});    
+                console.log(itemCart);
+            }
+        }
+    })
+</script>
