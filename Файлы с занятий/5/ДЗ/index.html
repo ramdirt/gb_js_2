@@ -20,12 +20,13 @@
             <button class="btn-cart" type="button" @click="isVisibleCart = !isVisibleCart">Корзина</button>
             <div :class="['cart-block', {'invisible': !isVisibleCart}]">
                 <p v-show="basket.length == 0">Нет товаров</p>
-                    <div class="cart-item" v-for="item of basket">
+                    <div class="cart-item" v-for="item of basket" :key="item.id_product">
                         <img :src="imgCatalog" alt="Some img">
                             <div>
                                 <h3>{{item.product_name}}</h3>
                                 <p>Количество: {{ item.quantity}}</p>
                                 <p>Цена: {{ item.quantity * item.price }} $</p>
+                                <button class="buy-btn" @click="removeItemCart(item)">x</button>
                             </div>
                     </div>
                 <button class="buy-btn" v-show="basket.length > 0">Заказать</button>
@@ -55,18 +56,3 @@
     <script src="js/main.js"></script>
 </body>
 </html>
-
-<!--<div class="cart-item" data-id="${this.id_product}">-->
-    <!--<div class="product-bio">-->
-        <!--<img src="${this.img}" alt="Some image">-->
-        <!--<div class="product-desc">-->
-            <!--<p class="product-title">${this.product_name}</p>-->
-            <!--<p class="product-quantity">Quantity: ${this.quantity}</p>-->
-            <!--<p class="product-single-price">$${this.price} each</p>-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div class="right-block">-->
-        <!--<p class="product-price">${this.quantity*this.price}</p>-->
-        <!--<button class="del-btn" data-id="${this.id_product}">&times;</button>-->
-    <!--</div>-->
-<!--</div>-->
