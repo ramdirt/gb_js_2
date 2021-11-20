@@ -11,48 +11,19 @@
     <header>
         <div class="logo">E-shop</div>
         <div class="cart">
-            <form action="#" class="search-form">
-                <input type="text" class="search-field" v-model="userSearch">
-                <button class="btn-search" type="submit" @click.preventDefault="filter(userSearch)">
-                    <i class="fas fa-search"></i>
-                </button>
-            </form>
+            <user-search></user-search>
+
             <button class="btn-cart" type="button" @click="isVisibleCart = !isVisibleCart">Корзина</button>
-            <div :class="['cart-block', {'invisible': !isVisibleCart}]">
-                <p v-show="basket.length == 0">Нет товаров</p>
-                    <div class="cart-item" v-for="item of basket" :key="item.id_product">
-                        <img :src="imgCatalog" alt="Some img">
-                            <div>
-                                <h3>{{item.product_name}}</h3>
-                                <p>Количество: {{ item.quantity}}</p>
-                                <p>Цена: {{ item.quantity * item.price }} $</p>
-                                <button class="buy-btn" @click="removeItemCart(item)">x</button>
-                            </div>
-                    </div>
-                <button class="buy-btn" v-show="basket.length > 0">Заказать</button>
-            </div>
+            <basket :class="[{'invisible': !isVisibleCart}]" :basket="basket" :img='imgCatalog'></basket>
         </div>
     </header>
     <main>
-        <div class="products">
-            <div
-                class="product-item"
-                v-for="product of products"
-                :key="product.id_product"
-                v-show="viewHide(product)"
-            >
-                <img :src="imgCatalog" alt="Some img">
-                <div class="desc">
-                    <h3>{{product.product_name}}</h3>
-                    <p>{{product.price}} $</p>
-                    <button class="buy-btn" @click="addProductCart(product)">Купить</button>
-                </div>
-            </div>
-        </div>
+        <products :products="products" :img="imgCatalog"></products>
     </main>
 </div>
     <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src=js/comp.js></script>
     <script src="js/main.js"></script>
 </body>
 </html>
