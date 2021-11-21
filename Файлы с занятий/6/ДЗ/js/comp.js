@@ -1,3 +1,5 @@
+const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+
 Vue.component('products', {
     props: ['products', 'img'],
     methods: {
@@ -19,6 +21,7 @@ Vue.component('products', {
                             v-show="viewHide(item)"
                             >                   
                     </product>
+                    <connect></connect>
                 </div>
     `
 });
@@ -119,4 +122,46 @@ Vue.component('user-search', {
                 </button>
             </form>
     `
+})
+Vue.component('connect', {
+    data() {
+        return {
+            catalogUrl: '/catalogData.json',
+            statusConnect: '',
+            showError: false
+        }
+    },
+    template: `
+        <p v-show="showError">{{ statusConnect }}</p>
+    `,
+    methods: {
+        getJson(url){
+            return fetch(url)
+                .then(result => result.json())
+                .catch(error => {
+                    return error;
+                })
+        },
+    },
+    mounted(){
+        this.getJson(`${API + this.catalogUrl}`)
+            .then(data => {
+                for(let el of data){
+                    this.$root.products.push(el);
+                }})
+                .catch(error => {
+                    this.statusConnect = `Ошибка загрузки по API: ${error}`;
+                    this.showError = true
+                });
+        this.getJson(`getProducts.json`)
+            .then(data => {
+                for(let el of data){
+                    this.$root.products.push(el);
+                }
+            })
+            .catch(error => {
+                this.statusConnect = `Ошибка загрузки из файла: ${error}`;
+                this.showError = true
+            });
+        },
 })
