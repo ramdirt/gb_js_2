@@ -14,7 +14,7 @@
             <user-search></user-search>
 
             <button class="btn-cart" type="button" @click="isVisibleCart = !isVisibleCart">Корзина</button>
-            <basket :class="[{'invisible': !isVisibleCart}]" :basket="basket" :img='imgCatalog'></basket>
+            <basket v-show="isVisibleCart" :basket="basket" :img='imgCatalog'></basket>
         </div>
     </header>
     <main>
