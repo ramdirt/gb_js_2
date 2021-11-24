@@ -5,8 +5,8 @@ Vue.component('cart', {
       return {
           cartUrl: '/getBasket.json',
           cartItems: [],
-          imgCart: 'https://placehold.it/50x100',
-          showCart: false
+          imgCart: 'http://placehold.it/50x100',
+          showCart: true
       }
     },
     mounted(){
@@ -51,16 +51,37 @@ Vue.component('cart', {
             //     })
         },
         remove(item){
-            this.$parent.getJson(`${API}/addToBasket.json`)
-                .then(data => {
-                    if (data.result === 1) {
-                        if(item.quantity>1){
-                            item.quantity--;
-                        } else {
-                            this.cartItems.splice(this.cartItems.indexOf(item), 1);
+            // this.$parent.getJson(`${API}/addToBasket.json`)
+            //     .then(data => {
+            //         if (data.result === 1) {
+            //             if(item.quantity>1){
+            //                 item.quantity--;
+            //             } else {
+            //                 this.cartItems.splice(this.cartItems.indexOf(item), 1);
+            //             }
+            //         }
+            //     })
+            let find = this.cartItems.find(el => el.id_product === item.id_product);
+            if(find){
+                this.$parent.removeJson(`/api/cart/${find.id_product}`, {quantity: 1})
+                    .then(data => {
+                        if(data.result === 1){
+                            if (find.quantity > 1) {
+                                find.quantity--
+                            } else {
+                                const idx = this.cartItems.findIndex(el => el.id_product === item.id_product)
+                                this.cartItems.splice(idx, 1)
+                                
+                            }
+                            // console.log(data)
+                            // const idx = data.contents.findIndex(product => product.id_product === find.id_product)
+                            // console.log(idx)
+                            // this.$root.basket.splice(idx, 1)
+
                         }
-                    }
-                })
+                    })
+            }
+            
         },
     },
     template: `<div>
