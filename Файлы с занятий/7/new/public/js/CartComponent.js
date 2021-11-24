@@ -5,7 +5,7 @@ Vue.component('cart', {
       return {
           cartUrl: '/getBasket.json',
           cartItems: [],
-          imgCart: 'https://placehold.it/200x150',
+          imgCart: 'https://placehold.it/50x100',
           showCart: false
       }
     },
@@ -13,7 +13,6 @@ Vue.component('cart', {
         this.$parent.getJson(`/api/cart`)
             .then(data => {
                 for (let item of data.contents){
-                    item.imgPath = `img/${item.id_product}.jpg`;
                     this.$data.cartItems.push(item);
                 }
             });
@@ -30,7 +29,6 @@ Vue.component('cart', {
                     })
             } else {
                 const prod = Object.assign({quantity: 1}, item);
-                item.imgPath = `img/${item.id_product}.jpg`;
                 this.$parent.postJson(`/api/cart`, prod)
                     .then(data => {
                         if(data.result === 1){
@@ -64,27 +62,14 @@ Vue.component('cart', {
                     }
                 })
         },
-        // cartCount() {
-        //     return this.cartItems.reduce((summ, item) => summ + item.quantity, 0);
-        //   },
-        //   cartSumm() {
-        //     return this.cartItems.reduce((summ, item) => summ + item.quantity*item.price, 0);
-        //   }
     },
-    template: `
-    <div>
-    <button class="btn-cart" type="button" @click="showCart = !showCart">Корзина</button>
-    <h2 v-if=" cartItems.length === 0">Корзина пуста</h2>
-        <div v-else >
-           
-            <div class="cart-block" v-show="showCart">      
-                <h3 > {{ this.cartItems.reduce((summ, item) => summ + item.quantity, 0) }} товара(ров) ИТОГО:{{ this.cartItems.reduce((summ, item) => summ + item.quantity*item.price, 0) }}) рублей </h2>
-                <cart-item v-for="item of cartItems" :key="item.id_product" :img="item.imgPath" :cart-item="item" :cart-count = "cartCount"
-                :cart-summ = "cartSumm" @remove="remove" @add-product="addProduct">
-                </cart-item>
-            </div>  
+    template: `<div>
+<button class="btn-cart" type="button" @click="showCart = !showCart">Корзина</button>
+        <div class="cart-block" v-show="showCart">
+            <cart-item v-for="item of cartItems" :key="item.id_product" :img="imgCart" :cart-item="item" @remove="remove">
+            </cart-item>
         </div>
-    </div>
+        </div>
     `
 });
 
@@ -92,17 +77,18 @@ Vue.component('cart-item', {
     props: ['img', 'cartItem'],
     template: `
     <div class="cart-item">
-        <img class="cartImg" :src="img" alt="Some img">
-        <div class="product-desc">
-            <h3>{{ cartItem.product_name }}</h3>
-            <p>Цена: {{ cartItem.price }}</p>
-            <div class="changeQuantity">
-                <button class="del-btn btnInCart" @click="$emit('remove', cartItem)"> &times; </button>
-                <p>&#160;{{ cartItem.quantity }}&#160; шт.&#160; </p>
-                <button class="btnInCart" @click="$emit('add-product', cartItem)"> + </button>
-            </div>          
-            <p>Сумма: {{ cartItem.price * cartItem.quantity }}</p>
-        </div>
-    </div>
+                    <div class="product-bio">
+                        <img :src="img" alt="Some img">
+                        <div class="product-desc">
+                            <div class="product-title">{{ cartItem.product_name }}</div>
+                            <div class="product-quantity">Quantity: {{ cartItem.quantity }}</div>
+                            <div class="product-single-price">$ {{ cartItem.price }} each</div>
+                        </div>
+                    </div>
+                    <div class="right-block">
+                        <div class="product-price">{{cartItem.quantity*cartItem.price}}</div>
+                        <button class="del-btn" @click="$emit('remove', cartItem)">&times;</button>
+                    </div>
+                </div>
     `
 })

@@ -1,7 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const app = express();
-const cart = require('./cartRouter');
+const cart = require('./cartRouter');//обработчик всех запросов корзины
 
 app.use(express.json());
 app.use('/', express.static('public'));
